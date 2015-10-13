@@ -79,14 +79,26 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      var thisRow = this.get(rowIndex);
+      var queenAmout =  thisRow.reduce(function (memo, spot) {
+        return memo+spot;
+      });
+      return queenAmout > 1;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
-    },
+      // return false; // fixme
+      var matrix = this.rows();
 
+      for(var i =0; i< matrix.length; i++){
+        if (this.hasRowConflictAt(i)){
+          return true;
+        }
+      } //closes for loop
+
+      return false;
+    }, //closes hasAnyRowConflicts;
 
 
     // COLUMNS - run from top to bottom
@@ -94,12 +106,27 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
-    },
+      //return false; // fixme
+      var matrix = this.rows();
+      var queenAmout =  matrix.reduce(function(memo, row){
+        return memo + row[colIndex];
+      }, 0);
+
+      return queenAmout > 1;
+
+
+    }, //close function
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      //return false; // fixme
+      var matrix = this.rows();
+      for (var i = 0; i < matrix.length; i++){
+        if (this.hasColConflictAt(i)){
+          return true;
+        }
+      } //close for loop
+      return false;
     },
 
 
@@ -109,12 +136,29 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var rowIndex = 0;
+      var colIndex = majorDiagonalColumnIndexAtFirstRow;
+      var matrix = this.rows();
+      var maxIndex = matrix.length;
+      var queenAmout = 0;
+      while(rowIndex < maxIndex && colIndex < maxIndex){
+        if (matrix[rowIndex][colIndex] === 1){
+          queenAmout++;
+        }
+        if (queenAmout > 1){return true; }
+        rowIndex++;
+        colIndex++;
+      }
+
+      return false;
+
+      // return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      // return false; // fixme
+      
     },
 
 
